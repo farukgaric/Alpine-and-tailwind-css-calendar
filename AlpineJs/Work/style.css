@@ -113,7 +113,7 @@ input[type="text"]:disabled {
   opacity: 0.5;
   border: none;
   text-transform: uppercase;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .btn:hover {
