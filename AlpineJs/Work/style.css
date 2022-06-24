@@ -1,0 +1,137 @@
+@import url("https://fonts.googleapis.com/css2?family=Smooch&display=swap");
+
+:root {
+  --color-red: #900a0a;
+  --color-green: #09a65a;
+  --color-blue: #092ea6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Smooch", "sans-serif";
+  display: flex;
+  background: #2b2a30;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 518px;
+  height: 518px;
+  border-radius: 50%;
+  box-shadow: -5px 14px 44px #000000, 5px -16px 50px rgba(255, 255, 255, 0.15);
+}
+
+svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: rotate(-90deg);
+  fill: transparent;
+  z-index: 1;
+}
+
+.ring.finished circle {
+  stroke: var(--color-red);
+}
+.ring.running circle {
+  stroke: var(--color-green);
+}
+.ring.paused circle {
+  stroke: var(--color-blue);
+}
+
+.timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: radial-gradient(
+    71.4% 71.4% at 51.7% 28.6%,
+    #3a393f 0%,
+    #17171a 100%
+  );
+  color: white;
+  border-radius: 50%;
+  box-shadow: inset 0px 0px 114px rgba(0, 0, 0, 0.45);
+  height: 500px;
+  width: 500px;
+  z-index: 2;
+}
+
+.time {
+  display: flex;
+  font-size: 190px;
+  margin: 30px auto;
+  position: relative;
+  top: 10px;
+}
+
+.controls {
+  font-family: "Smooch", "sans-serif";
+  display: flex;
+  flex-direction: column;
+}
+
+input[type="text"] {
+  border: 0;
+  border-bottom: 1px dashed white;
+  font-family: "Smooch", "sans-serif";
+  background: none;
+  color: white;
+  font-size: 120px;
+  height: 170px;
+  width: 150px;
+  text-align: center;
+  outline: none;
+}
+
+input[type="text"]:disabled {
+  border-bottom: none;
+}
+
+.btn {
+  cursor: pointer;
+  font-family: "Smooch", "sans-serif";
+  font-size: 16px;
+  letter-spacing: 10px;
+  line-height: 20px;
+  background: none;
+  color: white;
+  opacity: 0.5;
+  border: none;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.btn:hover {
+  opacity: 1;
+}
+
+.settings {
+  border: none;
+  background: none;
+  cursor: pointer;
+  opacity: 0.3;
+}
+
+.settings:hover {
+  opacity: 1;
+}
+
+.settings:disabled {
+  opacity: 0.1;
+  cursor: not-allowed;
+}

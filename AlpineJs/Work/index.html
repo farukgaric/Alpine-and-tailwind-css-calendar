@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project 1</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.7.0/dist/cdn.min.js"
+    ></script>
+  </head>
+  <body>
+    <div
+      class="container"
+      x-data="{
+        mode: 'finished',
+        minutes: 5,
+        seconds: 0,
+        timeRemaining: 0,
+        get time() {return this.minutes * 60 + this.seconds},
+        get isFinished() {return this.mode === 'finished'},
+      }"
+    >
+      <!-- Timer mode & progress ring -->
+      <div
+        class="ring"
+        x-bind:class="mode"
+        x-data="{
+        get progress() { return 1595.93 * (1 - this.timeRemaining / this.time); },
+        }"
+      >
+        <svg height="518" width="518" viewBox="0 0 518 518">
+          <circle
+            cx="50%"
+            cy="50%"
+            r="254"
+            fill="transparent"
+            stroke-width="9px"
+            stroke-dasharray="1595.93"
+            x-bind:stroke-dashoffset="progress"
+          />
+        </svg>
+      </div>
+
+      <!-- Display timer & control -->
+
+      <div
+        class="timer"
+        x-data="{
+        edit: false,
+        toggleEdit() { this.edit = !this.edit; },
+        }"
+      >
+        <h2>Time goes by too fast!</h2>
+        <div
+          class="time"
+          x-data="{
+          displayMinutes() {
+            const mins = Math.floor(this.timeRemaining / 60);
+            return mins < 10 ? `0${mins}` : `${mins}` ;
+          },
+          displaySeconds() {
+            const secs = this.timeRemaining % 60;
+            return secs < 10 ? `0${secs}` : `${secs}`;
+          },
+          updateMinutes({target}) { 
+            this.minutes = +target.value; 
+            this.timeRemaining = time;
+          },
+          updateSeconds({target}) { 
+            this.seconds = +target.value; 
+            this.timeRemaining = time;
+          },
+        }"
+        >
+          <div class="minutes">
+            <input
+              type="text"
+              x-on:input="updateMinutes($event)"
+              x-bind:value="displayMinutes"
+              x-bind:disabled="!edit"
+            />
+          </div>
+          <div class="colon">:</div>
+          <div class="seconds">
+            <input
+              type="text"
+              x-on:input="updateSeconds($event)"
+              x-bind:value="displaySeconds"
+              x-bind:disabled="!edit"
+            />
+          </div>
+        </div>
+
+        <div
+          class="controls"
+          x-data="{
+          timer: null,
+          handleTimer() {
+            switch (this.mode){
+              case 'finished':
+                this.startTimer(); break;
+              case 'running':
+                this.pauseTimer(); break;
+              case 'paused':
+                this.resumeTimer(); break;
+              default:
+                break;
+            }
+          },
+          startTimer () {
+            this.edit = false;
+            this.timeRemaining = this.time;
+            this.resumeTimer();
+            this.timer = setInterval(() => {
+              if (this.timeRemaining > 0 && this.mode !== 'paused') { this.timeRemaining--;
+              } else if (this.mode === 'paused') {
+              } else { this.endTimer() }
+            }, 1000);
+          },
+          pauseTimer() { this.mode = 'paused' },
+          resumeTimer() { this.mode = 'running' },
+          resetTimer () {
+            this.mode = 'finished';
+            clearInterval(this.timer);
+            this.timeRemaining = this.time;
+          },
+          endTimer() {
+            this.resetTimer();
+            alert('Timer Ended')
+          },
+        }"
+          x-init="timeRemaining = time"
+        >
+          <div>
+            <button
+              class="btn"
+              x-text="{finished: 'start', running: 'pause', paused: 'resume'}[mode]"
+              x-on:click="handleTimer"
+            ></button>
+            <button class="btn" x-on:click="resetTimer">reset</button>
+          </div>
+
+          <button
+            class="settings"
+            type="button"
+            x-on:click="toggleEdit"
+            x-bind:disabled="!isFinished"
+          >
+            <img src="images/settings.svg" alt="Settings" />
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
