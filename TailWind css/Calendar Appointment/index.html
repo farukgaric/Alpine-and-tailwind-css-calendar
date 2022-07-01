@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+      integrity="sha512-wnea99uKIC3TJF7v4eKk4Y+lMz2Mklv18+r4na2Gn1abDRPPOeef95xTzdwGD9e6zXJBteMIhZ1+68QC5byJZw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Appointment</title>
+  </head>
+  <body
+    class="flex items-center justify-center m-0 text-3xl min-h-screen p-0 min-w-0 bg-blue-50 box-border"
+  >
+    <div class="bg-white rounded-3xl shadow-2xl py-20 px-24" x-data="calendar">
+      <div class="flex items-center justify-between">
+        <button
+          class="previous bg-transparent cursor-pointer"
+          @click="changeMonth(-1)"
+        >
+          <img src="images/previous.svg" alt="Previous " />
+        </button>
+
+        <div
+          class="flex items-center justify-center leading-8 uppercase month"
+          x-text="monthHeader"
+        ></div>
+
+        <button
+          class="next bg-transparent cursor-pointer"
+          @click="changeMonth(+1)"
+        >
+          <img src="images/next.svg" alt="Next" />
+        </button>
+      </div>
+
+      <div class="grid wrapper">
+        <div class="flex items-center justify-center text-center font-bold">
+          S
+        </div>
+        <div class="flex items-center justify-center text-center font-bold">
+          M
+        </div>
+        <div class="flex items-center justify-center text-center font-bold">
+          T
+        </div>
+        <div class="flex items-center justify-center text-center font-bold">
+          W
+        </div>
+        <div class="flex items-center justify-center text-center font-bold">
+          T
+        </div>
+        <div class="flex items-center justify-center text-center font-bold">
+          F
+        </div>
+        <div class="flex items-center justify-center text-center font-bold">
+          S
+        </div>
+
+        <!-- <div class="flex items-center justify-center text-center"></div>
+        <div class="flex items-center justify-center text-center"></div>
+        <div class="flex items-center justify-center text-center"></div>
+        <div class="flex items-center justify-center text-center">1</div>
+        <div class="flex items-center justify-center text-center">2</div>
+        <div class="flex items-center justify-center text-center">3</div>
+        <div class="flex items-center justify-center text-center">4</div>
+        <div class="flex items-center justify-center text-center">5</div>
+        <div class="flex items-center justify-center text-center">6</div>
+        <div class="flex items-center justify-center text-center">7</div>
+        <div class="flex items-center justify-center text-center">8</div>
+        <div class="flex items-center justify-center text-center">9</div>
+        <div class="flex items-center justify-center text-center">10</div>
+        <div class="flex items-center justify-center text-center">11</div>
+        <div class="flex items-center justify-center text-center">12</div>
+        <div class="flex items-center justify-center text-center">13</div>
+        <div
+          class="flex items-center justify-center text-center bg-red-400 rounded-full h-16 w-16"
+        >
+          14
+        </div>
+        <div class="flex items-center justify-center text-center">15</div>
+        <div class="flex items-center justify-center text-center">16</div>
+        <div class="flex items-center justify-center text-center">17</div>
+        <div class="flex items-center justify-center text-center">18</div>
+        <div class="flex items-center justify-center text-center">19</div>
+        <div class="flex items-center justify-center text-center">20</div>
+        <div class="flex items-center justify-center text-center">21</div>
+        <div class="flex items-center justify-center text-center">22</div>
+        <div class="flex items-center justify-center text-center">23</div>
+        <div class="flex items-center justify-center text-center">24</div>
+        <div class="flex items-center justify-center text-center">25</div>
+        <div class="flex items-center justify-center text-center">26</div>
+        <div class="flex items-center justify-center text-center">27</div>
+        <div class="flex items-center justify-center text-center">28</div>
+        <div class="flex items-center justify-center text-center">29</div>
+        <div class="flex items-center justify-center text-center">30</div>
+        <div class="flex items-center justify-center text-center">31</div>
+        <div class="flex items-center justify-center text-center"></div> -->
+
+        <template x-for="day in monthDates">
+          <!-- :class="isToday(day) && 'today'" doesn't work due to render lifecycle order -->
+          <div
+            :data-day="day"
+            x-text="day"
+            class="flex items-center justify-center text-center"
+          ></div>
+        </template>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

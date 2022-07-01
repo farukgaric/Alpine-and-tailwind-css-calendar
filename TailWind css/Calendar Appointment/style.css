@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald&family=Roboto:wght@400;700&display=swap");
+
+body {
+  font-family: "Roboto", sans-serif !important;
+}
+
+.wrapper {
+  grid-template-columns: repeat(7, minmax(60px, 1fr));
+}
+
+.month {
+  grid-column: span 5;
+  font-family: "Oswald", sans-serif;
+}
+
+div {
+  min-height: 60px;
+}
+
+.today {
+  background-color: gray;
+  border-radius: 50%;
+}
