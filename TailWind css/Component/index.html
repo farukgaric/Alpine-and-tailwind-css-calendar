@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UI</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+      integrity="sha512-wnea99uKIC3TJF7v4eKk4Y+lMz2Mklv18+r4na2Gn1abDRPPOeef95xTzdwGD9e6zXJBteMIhZ1+68QC5byJZw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+  </head>
+  <body class="m-0 p-0 min-height-full min-width-full">
+    <div
+      class="wrapper menu flex items-center justify-around w-screen gap-50px h-screen "
+    >
+      <div
+        class="panel bg-white rounded-3xl border-box h-96 w-96 overflow-y-scroll pt-12 shadow-md"
+      >
+        <h1 class="text-3xl pb-5 pl-10 font-bold">To Go Menu</h1>
+        <ul class="menu list-none m-0 p-0" x-data="menu">
+          <template x-for="(item, index) in $store.menu.items">
+            <li class="flex ml-4 mb-12 pr-8 relative gap-5">
+              <div class="plate h-40 relative w-40 z-20 -top-3.5">
+                <img
+                  class="plate"
+                  :src="`images/${item.image}`"
+                  :alt="item.alt"
+                />
+              </div>
+              <div class="content pt-8 relative w-full z-30">
+                <p
+                  class="menu-item text-lg leading-5 mx-0 mt-0 mb-4 p-0"
+                  x-text="item.name"
+                ></p>
+                <p
+                  class="price text-3xl leading-none font-bold mx-0 mt-0 mb-5 p-0"
+                  x-text="$store.menu.displayDollar(item.price)"
+                ></p>
+                <button
+                  class="cursor-pointer flex items-center justify-center text-base py-1 px-4 text-white gap-2 bg-indigo-800 rounded-lg font-bold leading-tight absolute"
+                  :class="itemInCart(index) ? 'in-cart' : 'add'"
+                  @click="addToCart(index)"
+                  :disabled="itemInCart(index)"
+                >
+                  <img
+                    src="./images/check.svg"
+                    alt="check"
+                    x-show="itemInCart(index)"
+                  />
+                  <span
+                    x-text="itemInCart(index) ? 'In Cart' : 'Add to Cart'"
+                  ></span>
+                </button>
+              </div>
+            </li>
+          </template>
+        </ul>
+      </div>
+
+      <div
+        class="panel cart bg-white rounded-3xl border-box h-96 w-96 overflow-y-scroll pt-12 shadow-md"
+        x-data="cart"
+      >
+        <h1 class="text-3xl pb-5 pl-10 font-bold">
+          Your Cart
+        </h1>
+        <p  x-show="cartEmpty" class="pl-10">Your cart is empty</p>
+
+        <ul
+          class="cart-summary list-none m-0 p-0 border-solid border-b-4 my-0 ml-6 mr-8"
+          x-show="!cartEmpty"
+        >
+        <template x-for="(item, index) in $store.menu.cart">
+          <li>
+            <div class="plate flex items-center justify-center h-16 relative w-16">
+              <img
+                class="plate h-16 absolute top-0 left-0 w-16"
+                :src="`images/${item.image}`"
+                :alt="item.alt"
+              />
+              <div class="quantity bg-black flex items-center justify-center h-8 text-base text-white w-8 font-bold z-10 rounded-full" x-text="item.count"></div>
+            </div>
+            <div class="content">
+              <p class="menu-item mb-1" x-text="item.name"></p>
+              <p
+                class="price text-xl leading-none font-bold mb-0 text-base mx-0 mt-0 mb-4"
+                x-text="$store.menu.displayDollar(item.price)"
+              ></p>
+            </div>
+            <div class="quantity__wrapper  flex gap-2">
+              <button class="decrease  block h-8 p-0 w-8 rounded-full hover:bg-black bg-indigo-800" @click="decreaseItem(index)">
+                <img src="images/chevron.svg" class="relative top-px left-2"/>
+              </button>
+              <div class="quantity  bg-none text-black flex items-center justify-center h-8 text-base w-8 font-bold z-10 rounded-full" x-text="item.count"></div>
+              <button class="increase  block h-8 p-0 w-8 rounded-full hover:bg-black bg-indigo-800" @click="increaseItem(index)">
+                <img src="images/chevron.svg" class="top-px left-2"/>
+              </button>
+            <div class="subtotal  text-3xl leading-none font-bold text-right" x-text="itemTotal(item)"></div>
+          </li>
+        </template>
+          
+        </ul>
+
+        <div class="totals p-8">
+          <div class="line-item flex items-end mb-5 text-right">
+            <div class="label text-base font-bold w-3/5">Subtotal:</div>
+            <div class="amount price subtotal w-4/5"  x-text="$store.menu.displayDollar(cartPrice.subTotal)"></div>
+          </div>
+          <div class="line-item flex items-end mb-5 text-right">
+            <div class="label text-base font-bold w-3/5">Tax:</div>
+            <div class="amount price tax w-4/5" x-text="$store.menu.displayDollar(cartPrice.tax)"></div>
+          </div>
+          <div class="line-item flex items-end mb-5 text-right">
+            <div class="label text-base font-bold w-3/5">Total:</div>
+            <div class="amount price total w-4/5 text-purple-800" x-text="$store.menu.displayDollar(cartPrice.total)"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="data-menu.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

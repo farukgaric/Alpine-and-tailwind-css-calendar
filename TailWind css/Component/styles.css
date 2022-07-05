@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+
+body {
+  background: url("images/bg__left.svg") no-repeat left 10%,
+    url("images/bg__top-right.svg") no-repeat right top,
+    #eff0f6 url("images/bg__btm-right.svg") right bottom no-repeat;
+  font-family: "Poppins", sans-serif;
+}
+
+ul.menu li:nth-child(4n + 1):before {
+  --background: #e1f1fe;
+}
+
+ul.menu li:nth-child(4n + 2):before {
+  --background: #ffe2f0;
+}
+
+ul.menu li:nth-child(4n + 3):before {
+  --background: #f7f7fe;
+}
+
+ul.menu li:nth-child(4n + 4):before {
+  --background: #defef0;
+}
+
+ul.menu li:before {
+  background: var(--background);
+  border-bottom-left-radius: 20px;
+  border-top-left-radius: 20px;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 30px;
+  top: 0;
+  z-index: 1;
+}
+
+button.in-cart {
+  background: black;
+}
+
+.cart-summary {
+  border-color: rgba(215, 215, 249, 1);
+}
+
+.cart-summary li {
+  display: grid;
+  grid-template-areas:
+    "plate content content"
+    "plate quantity price";
+  border-bottom: 1px solid #d7d7f9;
+  margin-bottom: 45px;
+  padding-bottom: 45px;
+}
+
+.cart .plate {
+  grid-area: plate;
+}
+
+.cart-summary .content {
+  grid-area: content;
+}
+
+.cart .quantity {
+  grid-area: quantity;
+}
+
+.cart-summary li:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.increase img {
+  position: relative;
+  transform: rotate(180deg);
+}
